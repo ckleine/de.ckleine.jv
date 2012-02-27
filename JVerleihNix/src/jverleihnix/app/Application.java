@@ -18,7 +18,18 @@
  */
 package jverleihnix.app;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
+import jverleihnix.io.RentalEntryIO;
+import jverleihnix.model.Model;
+import jverleihnix.ui.DefaultUIRentalEntry;
 import jverleihnix.ui.IUIRentalEntry;
+import jverleihnix.ui.MediaType;
 
 /**
  * Application facade that provides access to the implementation of all the use
@@ -45,8 +56,7 @@ public class Application {
 	 *             if loading the file fails.
 	 */
 	public boolean load(String fileName) throws ApplicationException {
-		System.out.println("load: NIY");
-		throw new ApplicationException("load: NIY");
+		return RentalEntryIO.load(fileName);
 	}
 
 	/**
@@ -58,25 +68,23 @@ public class Application {
 	 * @throws ApplicationException
 	 *             if storing fails
 	 */
+	@SuppressWarnings("finally")
 	public boolean store(String fileName) throws ApplicationException {
-		System.out.println("store: NIY");
-		throw new ApplicationException("store: NIY");
+		return RentalEntryIO.save(fileName);
 	}
 
 	/**
 	 * @return The number of rental entries hold in the model
 	 */
 	public int getNumberOfRentals() {
-		System.out.println("getNumberOfRentals: NIY");
-		return 0;
+		return Model.instance.getEntries().size();
 	}
 
 	/**
 	 * @return The rental entry that is stored on the given index in the model.
 	 */
 	public IUIRentalEntry getEntry(int index) {
-		System.out.println("getEntry: NIY");
-		return null;
+		return Model.instance.getEntries().get(index);
 	}
 
 	/**
@@ -86,7 +94,7 @@ public class Application {
 	 *            to add
 	 */
 	public void addEntry(IUIRentalEntry entry) {
-		System.out.println("addEntry: NIY");
+		Model.instance.addEntry(entry);
 	}
 
 	/**
@@ -99,7 +107,8 @@ public class Application {
 	 *            of the entry to modify
 	 */
 	public void modifyEntry(IUIRentalEntry entry, int index) {
-		System.out.println("modifyEntry: NIY");
+		Model.instance.replaceEntry(entry, index);
+		
 	}
 
 	/**
@@ -109,7 +118,7 @@ public class Application {
 	 *            of the entry to remove
 	 */
 	public void finishEntry(int index) {
-		System.out.println("finishEntry: NIY");
+		Model.instance.removeEntry(index);
 	}
 
 	/**
