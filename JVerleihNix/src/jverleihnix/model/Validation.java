@@ -7,56 +7,69 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.lang.Integer;
 
+import jverleihnix.ui.MediaType;
+
 public class Validation {
+	
+	private static String[] dateFormatArray = {
+		"dd.MM.yyyy, hh:mm",
+		"dd.MM.yyyy",
+		"yyyy~MM~dd, hh:mm",
+		"yyyy~MM~dd",
+		"yyyy-MM-dd, hh:mm",
+		"yyyy-MM-dd",
+		"MM/dd/yyyy, hh:mm a",
+		"MM/dd/yyyy"
+	};
+	
 	/**
 	 * Validates simpleDateFormatStrings
 	 * 
-	 * @param simpleDateFormatString
-	 *            	Format of the date.
 	 * @param dueDateString to validate
-	 * @param length : expected length of the dueDateString
-	 * @param specialChar to recognize the right DateFormat
-	 * @param specialCharPos : position of the specialChar
 	 * 		
 	 * @return True if Validation was successful else False
 	 */
-	public static Boolean dueDateValidation (String simpleDateFormatString, String dueDateString, int length, char specialChar, int specialCharPos){
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(simpleDateFormatString);
-		Date actuallDate = new Date();
-		if (dueDateString.length() == length && dueDateString.charAt(specialCharPos-1) == specialChar){
-			try {
-				Date dueDate = simpleDateFormat.parse(dueDateString);
-				final int MAX_DAY_OF_MONTH = getMaxDayOfMonth(getMonth(simpleDateFormatString, dueDateString),getYear(simpleDateFormatString, dueDateString));
-				//check future date
-				if (dueDate.before(actuallDate)){
-					return false;
-				//check month
-				}else if (getMonth(simpleDateFormatString, dueDateString) > 12 || getMonth(simpleDateFormatString, dueDateString) < 1){
-					return false;
-				//check day
-				}else if (getDay(simpleDateFormatString, dueDateString) > MAX_DAY_OF_MONTH || getDay(simpleDateFormatString, dueDateString) < 1){
-					return false;
-				//check time for germanDateFormat
-				}else if (length == 17){
-					if (getHour(simpleDateFormatString, dueDateString) > 23 || getDay(simpleDateFormatString, dueDateString) < 0){
-						return false;
-					} else if (getMin(simpleDateFormatString, dueDateString) > 59 || getDay(simpleDateFormatString, dueDateString) < 0){
-						return false;
-					}
-				//check time for englishDateFormat
-				}else if (length == 20){
-					if (getHour(simpleDateFormatString, dueDateString) > 12 || getDay(simpleDateFormatString, dueDateString) < 1){
-						return false;
-					} else if (getMin(simpleDateFormatString, dueDateString) > 59 || getDay(simpleDateFormatString, dueDateString) < 0){
-						return false;
-					}
-				}
-			} catch (ParseException e) {
-				return false;				
-			}
-			return true;
+	public static Boolean dueDateValidation (String dueDateString){
+		Date date = getDate(dueDateString);
+		if(date == null){
+			return false;
 		}
-		return false;
+		String dateFormatString = getDateFormat(dueDateString);
+
+		
+		Date actuallDate = new Date();
+		
+		final int MAX_DAY_OF_MONTH = getMaxDayOfMonth(getMonth(dateFormatString, dueDateString),getYear(dateFormatString, dueDateString));
+		
+		//check future date
+		if (date.before(actuallDate)){
+			return false;
+
+		//check month
+		}else if (getMonth(dateFormatString, dueDateString) > 12 || getMonth(dateFormatString, dueDateString) < 1){
+			return false;
+		//check day
+		}else if (getDay(dateFormatString, dueDateString) > MAX_DAY_OF_MONTH || getDay(dateFormatString, dueDateString) < 1){
+			return false;
+			
+		//check time for germanDateFormat
+		}else if (dateFormatString.contains("h")){
+			if (getHour(dateFormatString, dueDateString) > 23 || getDay(dateFormatString, dueDateString) < 0){
+				return false;
+			} else if (getMin(dateFormatString, dueDateString) > 59 || getDay(dateFormatString, dueDateString) < 0){
+				return false;
+			}
+		//check time for englishDateFormat
+		}else if (dateFormatString.contains("a")){
+			if (getHour(dateFormatString, dueDateString) > 12 || getDay(dateFormatString, dueDateString) < 1){
+				return false;
+			} else if (getMin(dateFormatString, dueDateString) > 59 || getDay(dateFormatString, dueDateString) < 0){
+				return false;
+			}
+		}
+			
+		return true;
+		
 	}
 	
 	
@@ -106,5 +119,67 @@ public class Validation {
 		cal.set(Calendar.MONTH, month-1);
 		cal.set(Calendar.DATE, 1);
 		return cal.getActualMaximum(Calendar.DATE);
+	}
+	
+	/**
+	 * Converts DateString to Date
+	 * 
+	 * @param dateString to convert to Date
+	 * @return Date if dateFormat exists else return null
+	 */
+	public static Date getDate(String dateString) {
+		Date date = null  ;
+		for (String dateFormatString : dateFormatArray){
+			if(valDate(dateString,dateFormatString)){
+				SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+				try {
+					date = dateFormat.parse(dateString);
+				} catch (ParseException e) {
+					return date;
+				}
+				
+			}
+		}
+		return  date;			
+	}
+	
+	public static String getDateFormat(String dateString) {
+		String dateFormat = null  ;
+		for (String dateFormatString : dateFormatArray){
+			if(valDate(dateString,dateFormatString)){
+				dateFormat = dateFormatString;	
+			}
+		}
+		return  dateFormat;			
+	}
+	
+	private static boolean valDate(String dateString, String dateFormatString){
+		SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
+		try {
+			int length = dateFormatString.length();
+			if(dateFormatString.contains("a")){
+				length = length + 1;
+			}
+			
+			if(dateString.length()!=length){
+				return false;
+			}
+			@SuppressWarnings("unused")
+			Date date = dateFormat.parse(dateString);
+			return true;
+			
+		} catch (ParseException e) {
+			return false;
+		}
+		
+	}
+	
+	public static boolean valMediaType(String mediaType){
+		try{MediaType.valueOf(mediaType.toUpperCase());
+		} 
+		catch (IllegalArgumentException exception){
+			return false;
+		}
+		return true;
 	}
 }

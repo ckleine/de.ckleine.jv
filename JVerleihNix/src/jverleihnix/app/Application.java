@@ -18,18 +18,16 @@
  */
 package jverleihnix.app;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+
+import java.util.List;
 import java.io.IOException;
-import java.io.Writer;
+import java.util.ArrayList;
 
 import jverleihnix.io.RentalEntryIO;
 import jverleihnix.model.Model;
-import jverleihnix.ui.DefaultUIRentalEntry;
+import jverleihnix.model.Validation;
 import jverleihnix.ui.IUIRentalEntry;
-import jverleihnix.ui.MediaType;
+import jverleihnix.ui.JVerleihNixFrame;
 
 /**
  * Application facade that provides access to the implementation of all the use
@@ -51,12 +49,16 @@ public class Application {
 	 * 
 	 * @param fileName
 	 *            To load rental entries from
-	 * @return True if loading was successful otherwise false
+	 * @return True if loading was successful
 	 * @throws ApplicationException
 	 *             if loading the file fails.
 	 */
-	public boolean load(String fileName) throws ApplicationException {
-		return RentalEntryIO.load(fileName);
+	public boolean load(String fileName) throws ApplicationException, IOException {
+		String errorLog = RentalEntryIO.load(fileName);
+		if (errorLog.length()>0){
+			JVerleihNixFrame.errorMessage(errorLog);
+		}
+		return true;
 	}
 
 	/**
@@ -64,13 +66,13 @@ public class Application {
 	 * 
 	 * @param fileName
 	 *            of the file to write the rental entries to.
-	 * @return True if storing the entries was successful otherwise false
-	 * @throws ApplicationException
+	 * @return True if storing the entries was successful
+	 * @throws ApplicationException or IOException
 	 *             if storing fails
 	 */
-	@SuppressWarnings("finally")
-	public boolean store(String fileName) throws ApplicationException {
-		return RentalEntryIO.save(fileName);
+	public boolean store(String fileName) throws ApplicationException, IOException {
+		RentalEntryIO.save(fileName);
+		return true;
 	}
 
 	/**
@@ -130,8 +132,28 @@ public class Application {
 	 *         are found an empty array is returned.
 	 */
 	public String[] validateEntry(IUIRentalEntry entry) {
-		System.out.println("validateEntry: NIY");
-		return new String[0];
+		List<String> errorLog = new ArrayList<String>();
+
+		//date validation
+		if (!Validation.dueDateValidation(entry.getDueDate())){
+			errorLog.add(Messages.getString("Application.0")); //$NON-NLS-1$
+		}
+		
+		//description validation
+		if (entry.getDescription().isEmpty()){
+			errorLog.add(Messages.getString("Application.1")); //$NON-NLS-1$
+		}
+		
+		
+		//array to String[]
+		String[] errorLogString = new String[errorLog.size()];
+		for (String error : errorLog){
+			errorLogString[errorLog.indexOf(error)] = error;
+		}
+
+		
+		return errorLogString;
 	}
+	
 
 }

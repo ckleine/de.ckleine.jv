@@ -97,7 +97,7 @@ public class RentalEntryDialog extends JDialog {
 	 */
 	public RentalEntryDialog(JFrame parent) {
 		super(parent, true);
-		setTitle("Rental Entry");
+		setTitle(Messages.getString("RentalEntryDialog.0")); //$NON-NLS-1$
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -148,7 +148,7 @@ public class RentalEntryDialog extends JDialog {
 	 * @return Cancel button
 	 */
 	private JButton createCancelButton() {
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton(Messages.getString("RentalEntryDialog.1")); //$NON-NLS-1$
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -173,7 +173,7 @@ public class RentalEntryDialog extends JDialog {
 	 * @return OK button
 	 */
 	private JButton createOkButton() {
-		JButton okButton = new JButton("Ok");
+		JButton okButton = new JButton(Messages.getString("RentalEntryDialog.2")); //$NON-NLS-1$
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -199,15 +199,15 @@ public class RentalEntryDialog extends JDialog {
 				String[] errorMsgs = Application.instance.validateEntry(entry);
 				if ((errorMsgs != null) && (errorMsgs.length > 0)) {
 					bldr.delete(0, bldr.length());
-					bldr.append("<html><b>Errors in entry:</b><ul>");
+					bldr.append(Messages.getString("RentalEntryDialog.3")); //$NON-NLS-1$
 					for (String msg : errorMsgs) {
-						bldr.append("<li>");
+						bldr.append("<li>"); //$NON-NLS-1$
 						bldr.append(msg);
-						bldr.append("</li>");
+						bldr.append("</li>"); //$NON-NLS-1$
 					}
-					bldr.append("</ul></html>");
+					bldr.append("</ul></html>"); //$NON-NLS-1$
 					JOptionPane.showMessageDialog(RentalEntryDialog.this, bldr
-							.toString(), "Errors", JOptionPane.ERROR_MESSAGE);
+							.toString(), "Errors", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 				} else {
 					buttonPressed = ButtonPressed.OK;
 					setVisible(false);
@@ -231,7 +231,7 @@ public class RentalEntryDialog extends JDialog {
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.insets = new Insets(0, 5, 5, 5);
 
-		JLabel dueDateLabel = new JLabel("Due Date:");
+		JLabel dueDateLabel = new JLabel(Messages.getString("RentalEntryDialog.8")); //$NON-NLS-1$
 		gc.gridwidth = 1;
 		gc.weightx = 0;
 		entryPanel.add(dueDateLabel, gc);
@@ -241,7 +241,7 @@ public class RentalEntryDialog extends JDialog {
 		gc.weightx = 1.0;
 		entryPanel.add(dueDate, gc);
 
-		JLabel descriptionLabel = new JLabel("Description:");
+		JLabel descriptionLabel = new JLabel(Messages.getString("RentalEntryDialog.9")); //$NON-NLS-1$
 		gc.gridwidth = 1;
 		gc.weightx = 0;
 		entryPanel.add(descriptionLabel, gc);
@@ -251,7 +251,7 @@ public class RentalEntryDialog extends JDialog {
 		gc.weightx = 1.0;
 		entryPanel.add(description, gc);
 
-		JLabel severitiesLabel = new JLabel("Media Type:");
+		JLabel severitiesLabel = new JLabel(Messages.getString("RentalEntryDialog.10")); //$NON-NLS-1$
 		gc.anchor = GridBagConstraints.NORTHWEST;
 		gc.gridwidth = 1;
 		gc.gridheight = 4;
@@ -259,7 +259,7 @@ public class RentalEntryDialog extends JDialog {
 		entryPanel.add(severitiesLabel, gc);
 
 		ButtonGroup severities = new ButtonGroup();
-		other = new JRadioButton("Other");
+		other = new JRadioButton("Other"); //$NON-NLS-1$
 		other.setSelected(true);
 		severities.add(other);
 		gc.anchor = GridBagConstraints.WEST;
@@ -268,15 +268,15 @@ public class RentalEntryDialog extends JDialog {
 		gc.weightx = 1.0;
 		entryPanel.add(other, gc);
 
-		cd = new JRadioButton("CD");
+		cd = new JRadioButton("CD"); //$NON-NLS-1$
 		severities.add(cd);
 		entryPanel.add(cd, gc);
 
-		dvd = new JRadioButton("DVD");
+		dvd = new JRadioButton("DVD"); //$NON-NLS-1$
 		severities.add(dvd);
 		entryPanel.add(dvd, gc);
 
-		blueray = new JRadioButton("BlueRay");
+		blueray = new JRadioButton("BlueRay"); //$NON-NLS-1$
 		severities.add(blueray);
 		entryPanel.add(blueray, gc);
 		return entryPanel;
@@ -309,8 +309,8 @@ public class RentalEntryDialog extends JDialog {
 	@Override
 	public void setVisible(boolean visible) {
 		if (visible) {
-			description.setText(entry != null ? entry.getDescription() : "");
-			dueDate.setText(entry != null ? entry.getDueDate() : "");
+			description.setText(entry != null ? entry.getDescription() : ""); //$NON-NLS-1$
+			dueDate.setText(entry != null ? entry.getDueDate() : ""); //$NON-NLS-1$
 			dueDate.requestFocusInWindow();
 			if (entry != null) {
 				switch (entry.getMediaType()) {
