@@ -23,6 +23,7 @@ import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import jverleihnix.internationalisation.Messages;
 import jverleihnix.io.RentalEntryIO;
 import jverleihnix.model.Model;
 import jverleihnix.model.Validation;
@@ -136,12 +137,12 @@ public class Application {
 
 		//date validation
 		if (!Validation.dueDateValidation(entry.getDueDate())){
-			errorLog.add(Messages.getString("Application.0")); //$NON-NLS-1$
+			errorLog.add(Messages.getString("insertCorrectDate"));
 		}
 		
 		//description validation
 		if (entry.getDescription().isEmpty()){
-			errorLog.add(Messages.getString("Application.1")); //$NON-NLS-1$
+			errorLog.add(Messages.getString("insertCorrectDescription"));
 		}
 		
 		

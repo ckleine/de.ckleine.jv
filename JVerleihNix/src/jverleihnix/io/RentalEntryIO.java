@@ -8,6 +8,7 @@ import java.io.LineNumberReader;
 import java.io.Writer;
 import jverleihnix.app.Application;
 import jverleihnix.app.ApplicationException;
+import jverleihnix.internationalisation.Messages;
 import jverleihnix.model.Model;
 import jverleihnix.model.Validation;
 import jverleihnix.ui.DefaultUIRentalEntry;
@@ -51,14 +52,14 @@ public class RentalEntryIO {
 		    }
 		    else{
 		    	if (Validation.getDate(rentalArray[1]) == null){
-		    		errorLog = errorLog + Messages.getString("RentalEntryIO.7") + line.getLineNumber() + "<br>"; //$NON-NLS-1$ //$NON-NLS-2$
+		    		errorLog = errorLog + Messages.getString("uncorrectDate") + line.getLineNumber() + "<br>"; //$NON-NLS-1$ //$NON-NLS-2$
 		    	}
 		    		
 		    	if (!Validation.valMediaType(rentalArray[3])){
-		    		errorLog = errorLog + Messages.getString("RentalEntryIO.9") + line.getLineNumber() + "<br>"; //$NON-NLS-1$ //$NON-NLS-2$
+		    		errorLog = errorLog + Messages.getString("uncorrectMediaType") + line.getLineNumber() + "<br>"; //$NON-NLS-1$ //$NON-NLS-2$
 		    	}
 		    	if (!(rentalArray.length == 4)){
-		    		errorLog = errorLog + Messages.getString("RentalEntryIO.11") + line.getLineNumber() + "<br>"; //$NON-NLS-1$ //$NON-NLS-2$
+		    		errorLog = errorLog + Messages.getString("unknownError") + line.getLineNumber() + "<br>"; //$NON-NLS-1$ //$NON-NLS-2$
 		    	}
 		    }
 	    } 

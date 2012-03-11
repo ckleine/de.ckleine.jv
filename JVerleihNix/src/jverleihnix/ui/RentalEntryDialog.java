@@ -43,6 +43,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import jverleihnix.app.Application;
+import jverleihnix.internationalisation.Messages;
 
 /**
  * <p>
@@ -97,7 +98,7 @@ public class RentalEntryDialog extends JDialog {
 	 */
 	public RentalEntryDialog(JFrame parent) {
 		super(parent, true);
-		setTitle(Messages.getString("RentalEntryDialog.0")); //$NON-NLS-1$
+		setTitle(Messages.getString("rentalEntry")); //$NON-NLS-1$
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -148,7 +149,7 @@ public class RentalEntryDialog extends JDialog {
 	 * @return Cancel button
 	 */
 	private JButton createCancelButton() {
-		JButton cancelButton = new JButton(Messages.getString("RentalEntryDialog.1")); //$NON-NLS-1$
+		JButton cancelButton = new JButton(Messages.getString("cancel")); //$NON-NLS-1$
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -173,7 +174,7 @@ public class RentalEntryDialog extends JDialog {
 	 * @return OK button
 	 */
 	private JButton createOkButton() {
-		JButton okButton = new JButton(Messages.getString("RentalEntryDialog.2")); //$NON-NLS-1$
+		JButton okButton = new JButton(Messages.getString("ok")); //$NON-NLS-1$
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -199,7 +200,7 @@ public class RentalEntryDialog extends JDialog {
 				String[] errorMsgs = Application.instance.validateEntry(entry);
 				if ((errorMsgs != null) && (errorMsgs.length > 0)) {
 					bldr.delete(0, bldr.length());
-					bldr.append(Messages.getString("RentalEntryDialog.3")); //$NON-NLS-1$
+					bldr.append("<html><b>"+ Messages.getString("ErrorInEntry") +"</b><ul>"); //$NON-NLS-1$
 					for (String msg : errorMsgs) {
 						bldr.append("<li>"); //$NON-NLS-1$
 						bldr.append(msg);
@@ -231,7 +232,7 @@ public class RentalEntryDialog extends JDialog {
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.insets = new Insets(0, 5, 5, 5);
 
-		JLabel dueDateLabel = new JLabel(Messages.getString("RentalEntryDialog.8")); //$NON-NLS-1$
+		JLabel dueDateLabel = new JLabel(Messages.getString("dueDate")); //$NON-NLS-1$
 		gc.gridwidth = 1;
 		gc.weightx = 0;
 		entryPanel.add(dueDateLabel, gc);
@@ -241,7 +242,7 @@ public class RentalEntryDialog extends JDialog {
 		gc.weightx = 1.0;
 		entryPanel.add(dueDate, gc);
 
-		JLabel descriptionLabel = new JLabel(Messages.getString("RentalEntryDialog.9")); //$NON-NLS-1$
+		JLabel descriptionLabel = new JLabel(Messages.getString("description")); //$NON-NLS-1$
 		gc.gridwidth = 1;
 		gc.weightx = 0;
 		entryPanel.add(descriptionLabel, gc);
@@ -251,7 +252,7 @@ public class RentalEntryDialog extends JDialog {
 		gc.weightx = 1.0;
 		entryPanel.add(description, gc);
 
-		JLabel severitiesLabel = new JLabel(Messages.getString("RentalEntryDialog.10")); //$NON-NLS-1$
+		JLabel severitiesLabel = new JLabel(Messages.getString("mediaType")); //$NON-NLS-1$
 		gc.anchor = GridBagConstraints.NORTHWEST;
 		gc.gridwidth = 1;
 		gc.gridheight = 4;

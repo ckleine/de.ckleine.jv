@@ -40,6 +40,7 @@ import javax.swing.SwingUtilities;
 
 import jverleihnix.app.Application;
 import jverleihnix.app.ApplicationException;
+import jverleihnix.internationalisation.Messages;
 import jverleihnix.ui.RentalEntryDialog.ButtonPressed;
 
 /**
@@ -135,7 +136,7 @@ public class JVerleihNixFrame extends JFrame {
 	 * @return The button on the toolbar to load a file.
 	 */
 	private JButton createLoadButton() {
-		JButton loadButton = new JButton(Messages.getString("JVerleihNixFrame.6"), openIcon); //$NON-NLS-1$
+		JButton loadButton = new JButton(Messages.getString("open"), openIcon); //$NON-NLS-1$
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -155,13 +156,13 @@ public class JVerleihNixFrame extends JFrame {
 						});
 					} catch (ApplicationException exc) {
 						JOptionPane.showMessageDialog(JVerleihNixFrame.this,
-								Messages.getString("JVerleihNixFrame.0") + exc.getMessage() //$NON-NLS-1$
-										+ "</p></html>", Messages.getString("JVerleihNixFrame.9"), //$NON-NLS-1$ //$NON-NLS-2$
+								"<html><b>" + Messages.getString("error") + ":</b><p>" + exc.getMessage() //$NON-NLS-1$
+										+ "</p></html>", Messages.getString("error"), //$NON-NLS-1$ //$NON-NLS-2$
 								JOptionPane.ERROR_MESSAGE);
 					} catch (IOException exc) {
 						JOptionPane.showMessageDialog(JVerleihNixFrame.this,
-								Messages.getString("JVerleihNixFrame.10") + exc.getMessage() //$NON-NLS-1$
-										+ "</p></html>", Messages.getString("JVerleihNixFrame.1"), //$NON-NLS-1$ //$NON-NLS-2$
+								"<html><b>" + Messages.getString("error") + ":</b><p>" + exc.getMessage() //$NON-NLS-1$
+										+ "</p></html>", Messages.getString("error"), //$NON-NLS-1$ //$NON-NLS-2$
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -175,8 +176,8 @@ public class JVerleihNixFrame extends JFrame {
 	 */
 	public static void errorMessage(String errorLog){
 		JOptionPane.showMessageDialog(null,
-				Messages.getString("JVerleihNixFrame.13") + errorLog //$NON-NLS-1$
-				+ "</p></html>", Messages.getString("JVerleihNixFrame.15"), //$NON-NLS-1$ //$NON-NLS-2$
+				 "<html><b>"+ Messages.getString("message") + ":</b><p>" + errorLog //$NON-NLS-1$
+				+ "</p></html>", Messages.getString("message"), //$NON-NLS-1$ //$NON-NLS-2$
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
@@ -189,7 +190,7 @@ public class JVerleihNixFrame extends JFrame {
 	 * @return Save button
 	 */
 	private JButton createSaveButton() {
-		JButton saveButton = new JButton(Messages.getString("JVerleihNixFrame.16"), saveIcon); //$NON-NLS-1$
+		JButton saveButton = new JButton(Messages.getString("save"), saveIcon); //$NON-NLS-1$
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -200,13 +201,13 @@ public class JVerleihNixFrame extends JFrame {
 						Application.instance.store(file.getAbsolutePath());
 					} catch (ApplicationException exc) {
 						JOptionPane.showMessageDialog(JVerleihNixFrame.this,
-								Messages.getString("JVerleihNixFrame.17") + exc.getMessage() //$NON-NLS-1$
-										+ "</p></html>", Messages.getString("JVerleihNixFrame.19"), //$NON-NLS-1$ //$NON-NLS-2$
+								"<html><b>" +  Messages.getString("error") + ":</b><p>" + exc.getMessage() //$NON-NLS-1$
+										+ "</p></html>", Messages.getString("error"), //$NON-NLS-1$ //$NON-NLS-2$
 								JOptionPane.ERROR_MESSAGE);
 					} catch (IOException exc) {
 						JOptionPane.showMessageDialog(JVerleihNixFrame.this,
-								Messages.getString("JVerleihNixFrame.20") + exc.getMessage() //$NON-NLS-1$
-										+ "</p></html>", Messages.getString("JVerleihNixFrame.22"), //$NON-NLS-1$ //$NON-NLS-2$
+								"<html><b>" +  Messages.getString("error") + ":</b><p>"+ exc.getMessage() //$NON-NLS-1$
+										+ "</p></html>", Messages.getString("error"), //$NON-NLS-1$ //$NON-NLS-2$
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -243,7 +244,7 @@ public class JVerleihNixFrame extends JFrame {
 	 * @return Return button
 	 */
 	private JButton createReturnedButton() {
-		JButton returnButton = new JButton(Messages.getString("JVerleihNixFrame.23"), returnedIcon); //$NON-NLS-1$
+		JButton returnButton = new JButton(Messages.getString("returned"), returnedIcon); //$NON-NLS-1$
 		returnButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -266,7 +267,7 @@ public class JVerleihNixFrame extends JFrame {
 	 * @return Edit button
 	 */
 	private JButton createEditButton() {
-		JButton editButton = new JButton(Messages.getString("JVerleihNixFrame.24"), editIcon); //$NON-NLS-1$
+		JButton editButton = new JButton(Messages.getString("edit"), editIcon); //$NON-NLS-1$
 		editButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -294,7 +295,7 @@ public class JVerleihNixFrame extends JFrame {
 	 * @return New button
 	 */
 	private JButton createNewButton() {
-		JButton newButton = new JButton(Messages.getString("JVerleihNixFrame.25"), newIcon); //$NON-NLS-1$
+		JButton newButton = new JButton(Messages.getString("new"), newIcon); //$NON-NLS-1$
 		newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
