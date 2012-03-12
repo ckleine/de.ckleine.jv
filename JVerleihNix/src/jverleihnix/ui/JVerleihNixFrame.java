@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,6 +44,7 @@ import jverleihnix.app.Application;
 import jverleihnix.app.ApplicationException;
 import jverleihnix.internationalisation.Messages;
 import jverleihnix.ui.RentalEntryDialog.ButtonPressed;
+import jverleihnix.JVerleihNix;
 
 /**
  * The main frame of the user interface of the rental list application.
@@ -125,6 +128,7 @@ public class JVerleihNixFrame extends JFrame {
 		toolBar.add(createNewButton());
 		toolBar.add(createEditButton());
 		toolBar.add(createReturnedButton());
+		toolBar.add(createLanguageButton());
 		return toolBar;
 	}
 
@@ -308,5 +312,36 @@ public class JVerleihNixFrame extends JFrame {
 		});
 		return newButton;
 	}
-
+	
+	/**
+	 * Creates and initializes the language button that is used to select the language.
+	 * 
+	 * @return language button
+	 */
+	private JButton createLanguageButton() {
+		final JButton languageButton = new JButton(Messages.getString("language")); //$NON-NLS-1$
+		languageButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Object[] possibilities = {"de", "en"};
+				String language = (String)JOptionPane.showInputDialog(
+									languageButton,
+				                    Messages.getString("language"),
+				                    Messages.getString("languageSelector"),
+				                    JOptionPane.PLAIN_MESSAGE,
+				                    editIcon,
+				                    possibilities,
+				                    "de");
+				if (language == "de"){
+					Messages.setLocale(Locale.GERMAN);
+				} else {
+					Messages.setLocale(Locale.ENGLISH);
+				}
+				JVerleihNix.refresh();
+			}
+			
+		});
+		
+		return languageButton;
+	}
 }
