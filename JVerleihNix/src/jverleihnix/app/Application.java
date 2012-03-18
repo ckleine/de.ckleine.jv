@@ -37,7 +37,7 @@ import jverleihnix.ui.JVerleihNixFrame;
 public class Application {
 
 	/**
-	 * Singleton attriute to access an instance of this class.
+	 * Singleton attribute to access an instance of this class.
 	 */
 	public static final Application instance = new Application();
 
@@ -53,6 +53,8 @@ public class Application {
 	 * @return True if loading was successful
 	 * @throws ApplicationException
 	 *             if loading the file fails.
+	 * @throws IOException
+	 * 			   if loading the file fails
 	 */
 	public boolean load(String fileName) throws ApplicationException, IOException {
 		String errorLog = RentalEntryIO.load(fileName);

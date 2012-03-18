@@ -27,14 +27,15 @@ import jverleihnix.ui.JVerleihNixFrame;
  * and to start up the UI.
  */
 public class JVerleihNix {
-	private static Runnable uiThread;
-	static JVerleihNixFrame ui;
+	
+	private static JVerleihNixFrame ui;
+	
 	/**
 	 * Starts this application
 	 * @param args No runtime arguments are evaluated
 	 */
 	public static void main(String[] args) {
-		uiThread = new Runnable() {
+		Runnable uiThread = new Runnable() {
 			@Override
 			public void run() {
 				ui = new JVerleihNixFrame();
@@ -44,6 +45,10 @@ public class JVerleihNix {
 		};
 		SwingUtilities.invokeLater(uiThread);
 	}
+	
+	/**
+	 * Restarts the ui
+	 */
 	public static void refresh(){
 		ui.setVisible(false);
 		ui = new JVerleihNixFrame();

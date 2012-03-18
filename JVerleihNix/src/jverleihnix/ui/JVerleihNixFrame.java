@@ -65,6 +65,8 @@ public class JVerleihNixFrame extends JFrame {
 			.getImage(getClass().getResource("/jverleihnix/ui/res/edit.png"))); //$NON-NLS-1$
 	private final Icon returnedIcon = new ImageIcon(Toolkit.getDefaultToolkit()
 			.getImage(getClass().getResource("/jverleihnix/ui/res/edit_remove.png"))); //$NON-NLS-1$
+	private final Icon configureIcon = new ImageIcon(Toolkit.getDefaultToolkit()
+			.getImage(getClass().getResource("/jverleihnix/ui/res/configure.png"))); //$NON-NLS-1$
 
 	/*
 	 * Defintion of global components and models to be used in the UI.
@@ -174,8 +176,10 @@ public class JVerleihNixFrame extends JFrame {
 		});
 		return loadButton;
 	}
+	
+	
 	/**
-	 * Creates and Error Message
+	 * Creates an Error Message
 	 * 
 	 */
 	public static void errorMessage(String errorLog){
@@ -319,24 +323,25 @@ public class JVerleihNixFrame extends JFrame {
 	 * @return language button
 	 */
 	private JButton createLanguageButton() {
-		final JButton languageButton = new JButton(Messages.getString("language")); //$NON-NLS-1$
+		final JButton languageButton = new JButton(Messages.getString("language"), configureIcon); //$NON-NLS-1$
 		languageButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Object[] possibilities = {"de", "en"};
+				Object[] possibilities = {Messages.getString("german"), Messages.getString("english")};
 				String language = (String)JOptionPane.showInputDialog(
 									languageButton,
 				                    Messages.getString("language"),
 				                    Messages.getString("languageSelector"),
 				                    JOptionPane.PLAIN_MESSAGE,
-				                    editIcon,
+				                    configureIcon,
 				                    possibilities,
-				                    "de");
-				if (language == "de"){
+				                    Messages.getString("german"));
+				if (language == Messages.getString("german")){
 					Messages.setLocale(Locale.GERMAN);
 				} else {
 					Messages.setLocale(Locale.ENGLISH);
 				}
+				//restart the ui
 				JVerleihNix.refresh();
 			}
 			

@@ -20,11 +20,16 @@ public class Model {
 		rentals = new ArrayList<IUIRentalEntry>();
 
 	}
-	
+	/**
+	 * @return List with rentals
+	 */
 	public List<IUIRentalEntry> getEntries() {
 		return rentals;
 	}
 	
+	/**
+	 * @param rentals List to set to this model
+	 */
 	public void setEntries(List<IUIRentalEntry> rentals) {
 		this.rentals = rentals;
 	}
@@ -68,7 +73,8 @@ public class Model {
 	private final static Comparator<IUIRentalEntry>
 		DATE_COMPARATOR = new Comparator<IUIRentalEntry>(){
 		public int compare(IUIRentalEntry rental1, IUIRentalEntry rental2){
-			if (Validation.getDate(rental1.getDueDate()).before(Validation.getDate(rental2.getDueDate()))){
+			if (Validation.getDate(rental1.getDueDate()).before(
+					Validation.getDate(rental2.getDueDate()))) {
 				return -1;
 			}else if (Validation.getDate(rental1.getDueDate()).after(Validation.getDate(rental2.getDueDate()))){
 				return 1;

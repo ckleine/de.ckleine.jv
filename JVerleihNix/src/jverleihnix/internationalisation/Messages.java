@@ -5,15 +5,10 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
-	
-	private static Locale locale = Locale.getDefault();
-	
-	
-	private static String BUNDLE_NAME = "jverleihnix.internationalisation.messages"; 
-		
-	
-	
 
+	private static Locale locale = Locale.getDefault();
+
+	private static String BUNDLE_NAME = "jverleihnix.internationalisation.messages";
 
 	private Messages() {
 	}
@@ -25,13 +20,12 @@ public class Messages {
 			return '!' + key + '!';
 		}
 	}
-	
-	public static void setLocale(Locale newLocale){
+
+	public static void setLocale(Locale newLocale) {
 		locale = newLocale;
 	}
-	
-	public static Locale getLocale(){
+
+	public static Locale getLocale() {
 		return locale;
 	}
 }
-
